@@ -21,7 +21,30 @@ fi
 # Run the test suite
 if [ $arg == "test" ]; then
     echo "Running npm test..."
-    #npm test
+    # Run Jest and capture the output
+    npx jest --coverage --json --outputFile=jest-results.json
+
+    # Extract the required information from the Jest JSON output
+    total=$(jq '.numTotalTests' jest-results.json)
+    passed=$(jq '.numPassedTests' jest-results.json)
+    
+    # Debugging: Print the coverageMap to understand its structure
+    echo "Coverage Map:"
+    jq '.coverageMap' jest-results.json
+
+    # Calculate coverage percentage
+    coverage=$(jq '[.coverageMap | to_entries[] | .value.lines.pct // 0] | add / length' jest-results.json)
+    
+    # Handle case where coverage is null
+    if [ "$coverage" == "null" ]; then
+        coverage="N/A"
+    fi
+
+    # Print the formatted output
+    echo "Total: $total"
+    echo "Passed: $passed"
+    echo "Coverage: $coverage"
+    echo "$passed/$total test cases passed. $coverage% line coverage achieved."
     exit 0
 fi
 
@@ -48,4 +71,3 @@ echo "Argument is a URL: $arg"
 npm run build
 # Pass the URL to index.js
 node dist/index.js --url "$arg"
-

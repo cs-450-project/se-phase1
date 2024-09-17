@@ -6,7 +6,7 @@
  * @param {string} filePath : Path to the file containing URLs
  */
 import * as fs from 'fs';
-import {evaluateModule} from './evaluateModule';
+import {evaluateModule} from './evaluateModule.js';
 
 export function readUrlsFromFile(filePath: string): void {
     fs.readFile(filePath, 'utf8', async (err: NodeJS.ErrnoException | null, data: string | null) => {

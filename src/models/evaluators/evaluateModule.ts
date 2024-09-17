@@ -5,10 +5,10 @@
  * 
  */
 
-import { Scorecard } from '../scores/scorecard';
-import { createScorecard } from './createScorecard';
-import { Metric } from '../metrics/metric';
-import { LicenseMetric } from '../metrics/licenseMetric';
+import { Scorecard } from '../scores/scorecard.js';
+import { createScorecard } from './createScorecard.js';
+import { Metric } from '../metrics/metric.js';
+import { LicenseMetric } from '../metrics/licenseMetric.js';
 import * as fs from 'fs';
 
 

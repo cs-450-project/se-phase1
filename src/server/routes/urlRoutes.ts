@@ -6,7 +6,7 @@
  */
 
 import { Router } from 'express';
-import  URLController  from '../controllers/urlController';
+import  URLController  from '../controllers/urlController.js';
 
 const router = Router();
 

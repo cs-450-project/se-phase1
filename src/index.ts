@@ -5,12 +5,18 @@
  * The server listens for requests made and processes the URLs accordingly.
  */
 
-
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
-import { evaluateModule } from "./models/evaluators/evaluateModule";
-import { readUrlsFromFile } from './models/evaluators/readurlsfromfile';
+import { evaluateModule } from "./models/evaluators/evaluateModule.js";
+import { helper } from "./models/helper.js";
+import { readUrlsFromFile } from './models/evaluators/readurlsfromfile.js';
+
+import dotenv from "dotenv";
+dotenv.config();
+
+helper();
+
 
 // Fill these in if you want to test while running in development mode
 const testURL = "";

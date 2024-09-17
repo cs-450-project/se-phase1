@@ -3,7 +3,7 @@
  * 
  */
 
-import { evaluateModule } from "../../models/evaluators/evaluateModule";
+import { evaluateModule } from "../../models/evaluators/evaluateModule.js";
 
 /**
  * @class URLServices

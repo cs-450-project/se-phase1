@@ -3,8 +3,8 @@
  * 
  */
 
-import { Scorecard } from '../scores/scorecard';
-import { Metric } from './metric';
+import { Scorecard } from '../scores/scorecard.js';
+import { Metric } from './metric.js';
 
 /**
  * @class LicenseMetric

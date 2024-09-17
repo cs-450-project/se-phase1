@@ -3,7 +3,7 @@
  * 
  */
 
-import { Scorecard } from "../scores/scorecard";
+import { Scorecard } from "../scores/scorecard.js";
 
 /**
  * @abstract

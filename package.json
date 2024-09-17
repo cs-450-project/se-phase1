@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "**Geting Started**",
   "main": "src/index.ts",
+  "type": "module",
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
@@ -21,6 +22,7 @@
     "typescript": "^5.6.2"
   },
   "dependencies": {
+    "@octokit/rest": "^21.0.2",
     "dotenv": "^16.4.5",
     "express": "^5.0.0",
     "yargs": "^17.7.2"

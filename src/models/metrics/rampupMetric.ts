@@ -1,31 +1,41 @@
 /**
  * @file rampUpMetric.ts
+ * @description This file contains the implementation of the RampUpMetric class which evaluates the ramp-up time by analyzing the README and documentation.
  */
 
 import { Scorecard } from '../scores/scorecard.js';
 import { Metric } from './metric.js';
-
 import { Octokit } from '@octokit/rest';
 import markdownlint from 'markdownlint';
-
 import dotenv from 'dotenv';
 dotenv.config();
 
 /**
  * @class RampUpMetric
- *
- * Evaluates the ramp-up time by analyzing the README and documentation.
- * Also calculates the latency of API requests to GitHub.
+ * @extends Metric
+ * @description Evaluates the ramp-up time by analyzing the README and documentation. Also calculates the latency of API requests to GitHub.
  */
 export class RampUpMetric extends Metric {
 
     private octokit: Octokit;
 
+    /**
+     * @constructor
+     * @description Initializes the Octokit instance for GitHub API interactions.
+     */
     constructor() {
         super();
         this.octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
     }
 
+    /**
+     * @method evaluate
+     * @description Evaluates the ramp-up time by fetching and analyzing the README file from the repository.
+     * Updates the scorecard with the ramp-up score and the latency of the API request.
+     *
+     * @param {Scorecard} card - The scorecard object containing module information
+     * @returns {Promise<void>} - A promise that resolves when the evaluation is complete
+     */
     public async evaluate(card: Scorecard): Promise<void> {
         try {
             // Measure start time
@@ -56,6 +66,13 @@ export class RampUpMetric extends Metric {
         }
     }
 
+    /**
+     * @method analyzeReadme
+     * @description Analyzes the README content to compute the ramp-up score based on the presence of key sections and markdown quality.
+     *
+     * @param {string} content - The content of the README file
+     * @returns {number} - The computed ramp-up score
+     */
     private analyzeReadme(content: string): number {
         let score = 0;
 

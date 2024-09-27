@@ -1,25 +1,28 @@
 /**
  * @file busFactorMetric.ts
+ * @description This file contains the implementation of the BusFactorMetric class which evaluates the bus factor of a repository.
  */
 
 import { Scorecard } from '../scores/scorecard.js';
 import { Metric } from './metric.js';
-
 import { Octokit } from '@octokit/rest';
-
 import dotenv from 'dotenv';
 dotenv.config();
 
 /**
  * @class BusFactorMetric
- *
- * Evaluates the bus factor of the repository by analyzing the distribution of contributions among contributors.
+ * @extends Metric
+ * @description Evaluates the bus factor of the repository by analyzing the distribution of contributions among contributors.
  * Also calculates and logs the latency of the GitHub API request.
  */
 export class BusFactorMetric extends Metric {
 
     private octokit!: Octokit;
 
+    /**
+     * @constructor
+     * @description Initializes the Octokit instance for GitHub API interactions.
+     */
     constructor() {
         super();
         try {
@@ -29,6 +32,14 @@ export class BusFactorMetric extends Metric {
         }
     }
 
+    /**
+     * @method evaluate
+     * @description Evaluates the bus factor of the repository by fetching contributors data from the GitHub API.
+     * Updates the scorecard with the bus factor score and the latency of the API request.
+     *
+     * @param {Scorecard & { BusFactor_Latency?: number }} card - The scorecard object containing module information
+     * @returns {Promise<void>} - A promise that resolves when the evaluation is complete
+     */
     public async evaluate(card: Scorecard & { BusFactor_Latency?: number }): Promise<void> {
         try {
             // Measure start time

@@ -1,30 +1,41 @@
 /**
  * @file correctnessMetric.ts
+ * @description This file contains the implementation of the CorrectnessMetric class which evaluates the correctness of a repository.
  */
 
 import { Scorecard } from '../scores/scorecard.js';
 import { Metric } from './metric.js';
-
 import { Octokit } from '@octokit/rest';
-
 import dotenv from 'dotenv';
 dotenv.config();
 
 /**
  * @class CorrectnessMetric
- *
- * Evaluates the correctness of the repository by checking for test suites and analyzing bug reports.
+ * @extends Metric
+ * @description Evaluates the correctness of the repository by checking for test suites and analyzing bug reports.
  * Also calculates the latency of API requests to GitHub.
  */
 export class CorrectnessMetric extends Metric {
 
     private octokit: Octokit;
 
+    /**
+     * @constructor
+     * @description Initializes the Octokit instance for GitHub API interactions.
+     */
     constructor() {
         super();
         this.octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
     }
 
+    /**
+     * @method evaluate
+     * @description Evaluates the correctness of the repository by checking for test suites and analyzing bug reports.
+     * Updates the scorecard with the correctness score.
+     *
+     * @param {Scorecard} card - The scorecard object containing module information
+     * @returns {Promise<void>} - A promise that resolves when the evaluation is complete
+     */
     public async evaluate(card: Scorecard): Promise<void> {
         try {
             let correctnessScore = 0;
@@ -46,6 +57,14 @@ export class CorrectnessMetric extends Metric {
         }
     }
 
+    /**
+     * @method checkForTests
+     * @description Checks if the repository has a test suite by looking for a test script in package.json.
+     * Updates the scorecard with the latency of the API request.
+     *
+     * @param {Scorecard} card - The scorecard object containing module information
+     * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating whether the repository has a test suite
+     */
     private async checkForTests(card: Scorecard): Promise<boolean> {
         try {
             // Measure start time
@@ -68,7 +87,6 @@ export class CorrectnessMetric extends Metric {
 
             return !!(packageJson.scripts && packageJson.scripts.test);
 
-            
         } catch (error: any) {
             if (error.status === 404) {
                 console.warn('package.json not found in the repository.');
@@ -82,6 +100,14 @@ export class CorrectnessMetric extends Metric {
         }
     }
 
+    /**
+     * @method analyzeBugs
+     * @description Analyzes the bug reports in the repository by fetching issues labeled as 'bug' from GitHub.
+     * Updates the scorecard with the latency of the API request.
+     *
+     * @param {Scorecard} card - The scorecard object containing module information
+     * @returns {Promise<number>} - A promise that resolves to a number representing the bug score
+     */
     private async analyzeBugs(card: Scorecard): Promise<number> {
         try {
             // Measure start time

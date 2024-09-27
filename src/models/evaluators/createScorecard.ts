@@ -1,6 +1,6 @@
 /**
  * @file createScorecard.ts
- * 
+ * @description This file contains the implementation of the createScorecard function which generates a Scorecard object based on the provided URL.
  */
 
 import { Scorecard } from "../scores/scorecard.js";
@@ -9,17 +9,17 @@ import logger from '../../logger.js';
 
 /**
  * @function createScorecard
- * 
- * This function creates a Scorecard object for the module based on the URL passed to it.
- * Here, we add the functionality for supporting npm and GitHub modules.
- * 
- * @param {string} url : URL of the module
- * @returns {Scorecard} : Scorecard object for the module
+ * @description This function creates a Scorecard object for the module based on the URL passed to it.
+ * It supports both npm and GitHub modules.
+ *
+ * @param {string} url - URL of the module
+ * @returns {Promise<Scorecard>} - A promise that resolves to a Scorecard object for the module
+ * @throws {Error} - Throws an error if the URL is invalid
  */
 export async function createScorecard(url: string): Promise<Scorecard> {
-    
     const trimmed = url.trim();
     logger.info(`Creating scorecard for URL: ${trimmed}`);
+    
     // Create URL object from the URL passed to the API
     const urlObject = new URL(trimmed);
 
@@ -37,15 +37,16 @@ export async function createScorecard(url: string): Promise<Scorecard> {
     }
 }
 
-
 /**
  * @function getNpmRepoURL
- * 
- * @param url 
- * @returns GitHub repository URL for an npm module
+ * @description Fetches the repository URL from the npm package URL.
+ *
+ * @param {string} url - URL of the npm package
+ * @returns {Promise<string>} - A promise that resolves to the repository URL of the npm package
+ * @throws {Error} - Throws an error if the repository URL cannot be fetched
  */
 async function getNpmRepoURL(url: string): Promise<string> {
-    const npmApiUrl = url.replace(/(?<=\/)www(?=\.)/, 'replicate').replace('/package', '')
+    const npmApiUrl = url.replace(/(?<=\/)www(?=\.)/, 'replicate').replace('/package', '');
     logger.info(`Fetching repository URL from npm API: ${npmApiUrl}`); // Log the API URL
     const npmApiResponse = await fetch(npmApiUrl);
     const npmApiData = await npmApiResponse.json();
@@ -56,10 +57,11 @@ async function getNpmRepoURL(url: string): Promise<string> {
 
 /**
  * @function setGitHubAttributes
- * 
- * @param url : URL of the module
- * @param urlRepo : GitHub repository URL
- * @returns Scorecard object with GitHub set attributes
+ * @description Sets the GitHub attributes for the Scorecard object.
+ *
+ * @param {string} url - URL of the module
+ * @param {string} urlRepo - GitHub repository URL
+ * @returns {Scorecard} - Scorecard object with GitHub set attributes
  */
 function setGitHubAttributes(url: string, urlRepo: string): Scorecard {
     const card = new Scorecard(url);
@@ -73,5 +75,5 @@ function setGitHubAttributes(url: string, urlRepo: string): Scorecard {
     logger.info(`Owner: ${card.owner}`);
     logger.info(`Repo: ${card.repo}`);
 
-    return card
+    return card;
 }

@@ -1,16 +1,13 @@
 /**
  * @file scorecard.ts
- * 
+ * @description This file contains the implementation of the Scorecard class which holds all of the metric calculations carried out on the module.
  */
-
 
 /**
  * @class Scorecard
- * 
- * This class holds all of the metric calculations carried out on the module.
+ * @description This class holds all of the metric calculations carried out on the module.
  * It is responsible for calculating the net score and returning results in JSON format.
- * Instance of Scorecard are passed into the different metrics classes as a "request" object.
- * 
+ * Instances of Scorecard are passed into the different metrics classes as a "request" object.
  */
 export class Scorecard {
     url: string;
@@ -30,11 +27,11 @@ export class Scorecard {
     license_Latency: number;
     
     /**
-     * @constructor 
+     * @constructor
+     * @description Initializes a new instance of the Scorecard class.
+     * The constructor takes a URL string and initializes all metric scores to 0.
      * 
-     * The constuctor takes two url stings because npm modules will require a different initial URL than GitHub modules..
-     * All of the scores of the various metrics are initialized to 0. 
-     * 
+     * @param {string} url - The URL of the module
      */
     constructor(url: string) {
         this.url = url;
@@ -54,16 +51,28 @@ export class Scorecard {
         this.license_Latency = 0;
     }
 
-    
-    // [TODO] Add weights
+    /**
+     * @method calculateNetScore
+     * @description Calculates the net score by averaging the scores of all metrics.
+     * The net score is stored in the netScore property.
+     * 
+     * @returns {void}
+     */
     public calculateNetScore(): void {
         this.netScore = (this.rampUp + this.correctness + this.busFactor + this.responsiveMaintainer + this.license) / 5;
     }
 
-    // Convert all member variables to NJSON
+    /**
+     * @method getResults
+     * @description Converts all member variables to a JSON string.
+     * The JSON string contains the URL, net score, and individual metric scores along with their latencies.
+     * 
+     * @returns {string} - The JSON string representation of the scorecard
+     */
     public getResults(): string {
         const scores = [
-            { URL: this.url,
+            { 
+                URL: this.url,
                 NetScore: this.netScore,
                 NetScore_Latency: this.netScore_Latency,
                 RampUp: this.rampUp,

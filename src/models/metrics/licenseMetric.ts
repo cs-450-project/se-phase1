@@ -1,33 +1,37 @@
 /**
  * @file licenseMetric.ts
- * 
+ * @description This file contains the implementation of the LicenseMetric class which evaluates the license metric of a module.
  */
 
 import { Scorecard } from '../scores/scorecard.js';
 import { Metric } from './metric.js';
-
 import { Octokit } from '@octokit/rest';
-
 import dotenv from 'dotenv';
 dotenv.config();
 
 /**
  * @class LicenseMetric
- * 
- * This class will evaluate the license metric of the module.
- * The GitHub API will be used to obtain the license information.
- * It will be compared to the approved license.
- * 
+ * @extends Metric
+ * @description This class evaluates the license metric of the module. The GitHub API is used to obtain the license information, which is then compared to the approved licenses.
  */
 export class LicenseMetric extends Metric {
 
     private octokit: Octokit;
     
-    // Approved licenses
+    /**
+     * @property {string[]} approvedLicensesIdentifiers - List of approved license identifiers (SPDX IDs)
+     */
     private approvedLicensesIdentifiers: string[] = ['MIT', 'LGPL', 'Apache-1.0', 'Apache-1.1'];
+    
+    /**
+     * @property {string[]} approvedLicensesNames - List of approved license names
+     */
     private approvedLicensesNames: string[] = ['MIT', 'GNU Lesser General Public License', 'Apache License 1.0', 'Apache License 1.1'];
     
-    // Initialize instance of Octokit
+    /**
+     * @constructor
+     * @description Initializes an instance of the LicenseMetric class and sets up the Octokit instance for GitHub API interactions.
+     */
     constructor() {
         super();
         this.octokit = new Octokit({
@@ -35,9 +39,15 @@ export class LicenseMetric extends Metric {
         });
     }
 
-    // Evaluate the license metric
+    /**
+     * @method evaluate
+     * @description Evaluates the license metric of the module by fetching license information from the GitHub repository and checking it against approved licenses.
+     * Updates the scorecard with the license score and the latency of the API requests.
+     *
+     * @param {Scorecard} card - The scorecard object containing module information
+     * @returns {Promise<void>} - A promise that resolves when the evaluation is complete
+     */
     public async evaluate(card: Scorecard): Promise<void> {
-        
         try {
             let totalLatency = 0;
 
@@ -97,7 +107,13 @@ export class LicenseMetric extends Metric {
         }
     }
 
-    // Check if the approved license is in the README
+    /**
+     * @method checkLicenseInReadme
+     * @description Checks if the approved license is mentioned in the README content.
+     *
+     * @param {string} content - The content of the README file
+     * @returns {boolean} - Returns true if an approved license is found in the README content, otherwise false
+     */
     private checkLicenseInReadme(content: string): boolean {
         return this.approvedLicensesNames.some(keyword => content.includes(keyword));
     }

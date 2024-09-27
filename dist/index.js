@@ -1,61 +1,65 @@
 /**
- * @file index.ts
- * @description Entry point of the API
- * Here we are creating a simple express server.
- * The server listens for requests made and processes the URLs accordingly.
+ * @file index.js
+ * @description Entry point of the API. This file creates a simple Express server that listens for requests and processes URLs accordingly.
  */
+
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { evaluateModule } from "./models/evaluators/evaluateModule.js";
 import { readURLsFromFile } from "./models/evaluators/readURLsFromFile.js";
 import dotenv from "dotenv";
 dotenv.config();
-// Fill these in if you want to test while running in development mode
+
+/**
+ * @constant {string} testURL - URL for testing purposes
+ */
 const testURL = "";
+
+/**
+ * @constant {string} testFile - File path for testing purposes
+ */
 const testFile = "";
-// Command line arguments
+
+/**
+ * @constant {Object} argv - Command line arguments parsed by yargs
+ * @property {string} url - URL of the module to evaluate
+ * @property {string} file - Path to the file containing the URLs
+ */
 const argv = yargs(hideBin(process.argv))
     .option('url', {
-    alias: 'u',
-    type: 'string',
-    describe: 'URL of the module to evaluate'
-})
+        alias: 'u',
+        type: 'string',
+        describe: 'URL of the module to evaluate'
+    })
     .option('file', {
-    alias: 'f',
-    type: 'string',
-    describe: 'Path to the file containing the URLs'
-})
+        alias: 'f',
+        type: 'string',
+        describe: 'Path to the file containing the URLs'
+    })
     .parseSync();
-// Get the URL and file from the command line arguments, or use testing values
+
+/**
+ * @constant {string} url - URL to evaluate, either from command line arguments or testing value
+ */
 const url = argv.url || testURL;
+
+/**
+ * @constant {string} file - File path to read URLs from, either from command line arguments or testing value
+ */
 const file = argv.file || testFile;
+
 // Call the evaluateModule function with the URL
 if (url) {
     const result = evaluateModule(url);
     console.log(result);
 }
+
+// Call the readURLsFromFile function with the file path
 if (file) {
-    //console.log(`File: ${file}`);
     readURLsFromFile(file);
 }
+
 /*
 // Here is the server code for when we want to convert the project to an API
-import dotenv from "dotenv";
-dotenv.config();
-
-import express, { Express, Request, Response } from "express";
-import URLRoutes from "./server/routes/urlRoutes";
-
-const app: Express = express();
-const port = process.env.PORT || 3000;
-
-app.use(express.json());
-
-app.use('/process-url', URLRoutes);
-
-// Start the server listening on the specified port
-app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
-});
-*/ 
+*/
 //# sourceMappingURL=index.js.map

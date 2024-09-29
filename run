@@ -12,14 +12,12 @@ arg=$1
 
 # Install dependencies
 if [ $arg == "install" ]; then
-    
     npm install
     exit 0
 fi
 
 # Run the test suite
 if [ $arg == "test" ]; then
-    
     npm run auto-grader-test | grep -v "JSON report written to"
     npm run build
     node dist/utils/reports/extract-results.js
@@ -29,7 +27,6 @@ fi
 
 # Run the development server
 if [ $arg == "dev" ]; then
-    
     npm run dev
     exit 0
 fi

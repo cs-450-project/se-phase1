@@ -1,7 +1,7 @@
 // tests/metrics/busFactorMetric.test.ts
 
 import { describe, it, expect, vi, beforeEach, afterEach, Mock } from 'vitest';
-import { BusFactorMetric } from '../../src/models/metrics/busFactorMetric';
+import { BusFactorMetric } from '../../src/models/metrics/busfactorMetric';
 import { Scorecard } from '../../src/models/scores/scorecard';
 
 // Mock the logger

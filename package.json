@@ -9,7 +9,7 @@
     "start": "node dist/index.js",
     "dev": "npx nodemon src/index.ts",
     "test": "npx vitest",
-    "auto-grader-test": "vitest run --silent --coverage --reporter=json --outputFile=vitest-results.json && npx tsc && node dist/utils/extract-results.js"
+    "auto-grader-test": "vitest run --silent --coverage --reporter=json --outputFile=./src/utils/reports/vitest-results.json"
   },
   "keywords": [],
   "author": "",
@@ -37,6 +37,7 @@
     "isomorphic-git": "^1.27.1",
     "markdownlint": "^0.35.0",
     "pino": "^9.4.0",
+    "tsconfig-paths": "^4.2.0",
     "yargs": "^17.7.2"
   }
 }

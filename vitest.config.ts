@@ -7,9 +7,10 @@ export default defineConfig({
     include: ['tests/**/*.test.ts'],  // Specify the test files
     coverage: {
       enabled: true,  // Enable coverage reports
-      reporter: ['json', 'json-summary'],  // Generate coverage reports
+      reporter: ['json-summary'],  // Generate coverage reports
       include: ['src/**/*.ts'],
-      exclude: ['src/server/**/*.ts']
+      exclude: ['src/server/**/*.ts', 'src/utils/reports/**'],
+      reportsDirectory: 'src/utils/reports/coverage',
     },
   },
 });

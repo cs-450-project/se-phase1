@@ -1,4 +1,0 @@
-Total Tests: 39
-Passed Tests: 39
-Test Pass Ratio: 100.00%
-Total Code Coverage: 87.7%

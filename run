@@ -23,6 +23,8 @@ fi
 if [ $arg == "test" ]; then
     echo "Running npm test..."
     npm run auto-grader-test | grep -v "JSON report written to"
+    npm run build
+    node dist/utils/reports/extract-results.js
     exit 0
 fi
 

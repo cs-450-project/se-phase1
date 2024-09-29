@@ -50,7 +50,8 @@ function writeResultsToConsole() {
   const { totalTests, passedTests } = readTestResults();
   const coveragePercentage = readCoverageData();
 
-  console.log(`${passedTests}/${totalTests} tests cases passed. ${coveragePercentage}% line coverage achieved.`);
+  const statement = `${passedTests}/${totalTests} test cases passed. ${coveragePercentage}% line coverage achieved.`;
+  console.log(statement.trim());
   
 }
 

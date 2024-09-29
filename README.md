@@ -72,7 +72,7 @@ Example:
 This will produce the output with the module scores in NDJSON format.
 ### Running Tests 
 To ensure everything is functioning correctly, you can run the test suite using npm or the bash file:
-*Not fully implemented*
+
 ```
 npm run test OR ./run test
 ```
